@@ -18,7 +18,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
     hashedPwd, _ := utils.HashPassword(user.Password)
     user.Password = hashedPwd
 
-    // user.Role = "viewer" // Default role
 	config.DB.Create(&user)
 
     w.WriteHeader(http.StatusCreated)

@@ -1,3 +1,15 @@
+// UploadDocument godoc
+// @Summary Upload a document
+// @Tags Documents
+// @Accept multipart/form-data
+// @Produce json
+// @Param file formData file true "Document File"
+// @Success 201 {string} string "File uploaded successfully"
+// @Failure 401 {string} string "Unauthorized"
+// @Failure 403 {string} string "Forbidden"
+// @Router /upload [post]
+// @Security BearerAuth
+
 package controllers
 
 

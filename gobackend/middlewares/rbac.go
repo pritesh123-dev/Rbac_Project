@@ -7,15 +7,24 @@ import (
 )
 
 
-func RequireRole(role string) mux.MiddlewareFunc {
+func RequireRoles(roles ...string) mux.MiddlewareFunc {
     return func(next http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
             user, ok := r.Context().Value("user").(*utils.JWTClaim)
-            if !ok || user.Role != role {
-                http.Error(w, "Forbidden - insufficient role", http.StatusForbidden)
+            if !ok {
+                http.Error(w, "Unauthorized", http.StatusUnauthorized)
                 return
             }
-            next.ServeHTTP(w, r)
+
+            for _, role := range roles {
+                if user.Role == role {
+                    next.ServeHTTP(w, r)
+                    return
+                }
+            }
+
+            http.Error(w, "Forbidden - insufficient role", http.StatusForbidden)
         })
     }
 }
+

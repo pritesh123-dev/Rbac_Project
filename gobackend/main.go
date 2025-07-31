@@ -1,7 +1,7 @@
 package main
 
 import (
-    "log"
+	"log"
     "net/http"
     "github.com/pritesh/gobackend/routes"
     "github.com/pritesh/gobackend/config"
